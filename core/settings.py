@@ -1,12 +1,18 @@
 from pathlib import Path
+import os
+import environ
+
+env = environ.Env()        #Creamos variables
+environ.Env.read_env()   #Leemos variablees
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-5^x_o^$di-s0#_@5x8d0p^bcd8#$_r$2)5bj#oyb-nqy35_ckt'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
-DEBUG = True
+DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = []
+#es el URL LOCAL. * SIGNIFICA QUE SE TRABAJE PARA TODOS
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -18,8 +24,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'core',
+    'blog',
+
+    'tailwind',
+
+    'theme'
 ]
 
+TAILWIND_APP_NAME = 'theme'
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+NPM_BIN_PATH= "/usr/bin/npm"
+
+#NPM_BIN_PATH = r"C:\Program Files (x86)\nodejs\npm.cmd"
+
+#Hola
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -35,7 +58,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
